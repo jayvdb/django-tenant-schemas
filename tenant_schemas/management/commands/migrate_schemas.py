@@ -38,6 +38,29 @@ class Command(SyncCommon):
             '--plan', action='store_true',
             help='Shows a list of the migration actions that will be performed.',
         )
+        parser.add_argument(
+            '--fake', action='store_true',
+            help='Mark migrations as run without actually running them.',
+        )
+        parser.add_argument(
+            '--fake-initial', action='store_true',
+            help='Detect if tables already exist and fake-apply initial migrations if so. Make sure '
+                 'that the current database schema matches your initial migration before using this '
+                 'flag. Django will only check for an existing table name.',
+        )
+        parser.add_argument(
+            'app_label', nargs='?',
+            help='App label of an application to synchronize the state.',
+        )
+        parser.add_argument(
+            'migration_name', nargs='?',
+            help='Database state will be brought to the state after that '
+                 'migration. Use the name "zero" to unapply all migrations.',
+        )
+        parser.add_argument(
+            '--noinput', '--no-input', action='store_false', dest='interactive',
+            help='Tells Django to NOT prompt the user for input of any kind.',
+        )
 
     def handle(self, *args, **options):
         super(Command, self).handle(*args, **options)
