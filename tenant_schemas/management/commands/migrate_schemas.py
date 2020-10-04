@@ -30,6 +30,10 @@ class Command(SyncCommon):
             '--interactive', action='store_true', dest='interactive',
             help='Run in interactive mode.',
         )
+        parser.add_argument(
+            '--check', action='store_true', dest='check_unapplied',
+            help='Exits with a non-zero status if unapplied migrations exist.',
+        )
 
     def handle(self, *args, **options):
         super(Command, self).handle(*args, **options)
