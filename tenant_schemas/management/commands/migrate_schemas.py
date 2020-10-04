@@ -7,6 +7,7 @@ from tenant_schemas.utils import (
     get_tenant_model,
     schema_exists,
 )
+from django.db import DEFAULT_DB_ALIAS
 
 
 class Command(SyncCommon):
@@ -16,8 +17,15 @@ class Command(SyncCommon):
 
     def add_arguments(self, parser):
         super(Command, self).add_arguments(parser)
-        command = MigrateCommand()
-        command.add_arguments(parser)
+        parser.add_argument(
+            '--database', action='store', dest='database',
+            default=DEFAULT_DB_ALIAS,
+            help='Nominates a database to synchronize. Defaults to the "default" database.',
+        )
+        parser.add_argument(
+            '--run-syncdb', action='store_true', dest='run_syncdb',
+            help='Creates tables for apps without migrations.',
+        )
 
     def handle(self, *args, **options):
         super(Command, self).handle(*args, **options)
