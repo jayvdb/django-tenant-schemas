@@ -26,6 +26,10 @@ class Command(SyncCommon):
             '--run-syncdb', action='store_true', dest='run_syncdb',
             help='Creates tables for apps without migrations.',
         )
+        parser.add_argument(
+            '--interactive', action='store_true', dest='interactive',
+            help='Run in interactive mode.',
+        )
 
     def handle(self, *args, **options):
         super(Command, self).handle(*args, **options)
