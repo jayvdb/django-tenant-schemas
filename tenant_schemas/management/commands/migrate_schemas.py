@@ -34,6 +34,10 @@ class Command(SyncCommon):
             '--check', action='store_true', dest='check_unapplied',
             help='Exits with a non-zero status if unapplied migrations exist.',
         )
+        parser.add_argument(
+            '--plan', action='store_true',
+            help='Shows a list of the migration actions that will be performed.',
+        )
 
     def handle(self, *args, **options):
         super(Command, self).handle(*args, **options)
